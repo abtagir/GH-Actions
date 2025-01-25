@@ -1,15 +1,19 @@
-name: CI
-
-on: [workflow_dispatch]
-  
+name: myworkflow
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'name of the person'
+        required: true
+        default: 'Chaminda'
+      country:
+        description: 'Country'
+        required: false
 
 jobs:
-  build:
+  greetuser:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Run a multi-line script
-        run:
-          echo Add other actions to build
-          echo test, and deploy your project.
-        
+    - run: |
+        echo "Hi ${{ github.event.inputs.name }}!"
+        echo "- in ${{ github.event.inputs.country }}!"
