@@ -1,19 +1,39 @@
-name: myworkflow
-on:
-  workflow_dispatch:
-    inputs:
-      name:
-        description: 'name of the person'
-        required: true
-        default: 'Chaminda'
-      country:
-        description: 'Country'
-        required: false
+name: .NET Core
+
+#on:
+#  push:
+ #   branches: [ master ]
+#  pull_request:
+ #   branches: [ master ]
+on: [workflow_dispatch]
 
 jobs:
-  greetuser:
+  build:
     runs-on: ubuntu-latest
+    
     steps:
-    - run: |
-        echo "Hi ${{ github.event.inputs.name }}!"
-        echo "- in ${{ github.event.inputs.country }}!"
+    - name: Checkout GitHub actions
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+
+    - name: Install dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
+
+    - name: Publish
+      run: dotnet publish -c Release -o dotnetcorewebapp
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: my-artifact
+        path: "./dotnetcorewebapp"
