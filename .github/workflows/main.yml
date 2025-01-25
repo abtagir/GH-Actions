@@ -21,21 +21,17 @@ jobs:
         dotnet-version: 6.0.x
 
     - name: Install dependencies
-      run: dotnet restore 
-      working-directory: ./MyConsoleApp
-      
+      run: dotnet restore /MyConsoleApp/MyConsoleApp.csproj
+            
     - name: Build
-      run: dotnet build --configuration Release --no-restore
-      working-directory: ./MyConsoleApp
-      
+      run: dotnet build /MyConsoleApp/MyConsoleApp.csproj --configuration Release --no-restore
+            
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
-      working-directory: ./MyConsoleApp
-      
+      run: dotnet test /MyConsoleApp/MyConsoleApp.csproj --no-restore --verbosity normal
+            
     - name: Publish
-      run: dotnet publish -c Release -o dotnetcorewebapp
-      working-directory: ./MyConsoleApp
-      
+      run: dotnet publish /MyConsoleApp/MyConsoleApp.csproj -c Release -o dotnetcorewebapp
+            
     - name: Upload Artifacts
       uses: actions/upload-artifact@v3
       with:
