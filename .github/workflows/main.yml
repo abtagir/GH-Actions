@@ -21,16 +21,16 @@ jobs:
         dotnet-version: 6.0.x
 
     - name: Install dependencies
-      run: dotnet restore /MyConsoleApp/MyGitHubActionsSolution.sln
+      run: dotnet restore ./MyConsoleApp/MyGitHubActionsSolution.sln
             
     - name: Build
-      run: dotnet build /MyConsoleApp/MyGitHubActionsSolution.sln --configuration Release --no-restore
+      run: dotnet build ./MyConsoleApp/MyGitHubActionsSolution.sln --configuration Release --no-restore
             
     - name: Test
-      run: dotnet test /MyConsoleApp/MyGitHubActionsSolution.sln --no-restore --verbosity normal
+      run: dotnet test ./MyConsoleApp/MyGitHubActionsSolution.sln --no-restore --verbosity normal
             
     - name: Publish
-      run: dotnet publish /MyConsoleApp/MyGitHubActionsSolution.sln -c Release -o dotnetcorewebapp
+      run: dotnet publish ./MyConsoleApp/MyGitHubActionsSolution.sln -c Release -o dotnetcorewebapp
             
     - name: Upload Artifacts
       uses: actions/upload-artifact@v3
